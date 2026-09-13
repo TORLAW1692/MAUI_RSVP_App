@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="RSVPApp.AddEventPage"
+             Title="Add Event"
+             BackgroundColor="#0B0B0D">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="12">
+
+            <Label Text="Add Event" FontSize="22" TextColor="White" HorizontalOptions="Center" />
+
+            <Entry x:Name="HostEntry" Placeholder="Host Name" PlaceholderColor="#9EA0A4" BackgroundColor="#121214" TextColor="White" />
+
+            <Entry x:Name="EventNameEntry" Placeholder="Event Name" PlaceholderColor="#9EA0A4" BackgroundColor="#121214" TextColor="White" />
+
+            <Entry x:Name="AddressEntry" Placeholder="Event Address" PlaceholderColor="#9EA0A4" BackgroundColor="#121214" TextColor="White" />
+
+            <Entry x:Name="MaxAttendeesEntry" Placeholder="Maximum Attendees" PlaceholderColor="#9EA0A4" Keyboard="Numeric" BackgroundColor="#121214" TextColor="White" />
+
+            <HorizontalStackLayout Spacing="8">
+                <VerticalStackLayout HorizontalOptions="FillAndExpand">
+                    <Label Text="Event Date" TextColor="#D0D0D0" FontSize="12" />
+                    <DatePicker x:Name="EventDatePicker" BackgroundColor="#121214" TextColor="White" />
+                </VerticalStackLayout>
+                <VerticalStackLayout WidthRequest="120">
+                    <Label Text="Time" TextColor="#D0D0D0" FontSize="12" />
+                    <TimePicker x:Name="EventTimePicker" BackgroundColor="#121214" TextColor="White" />
+                </VerticalStackLayout>
+            </HorizontalStackLayout>
+
+            <HorizontalStackLayout Spacing="8">
+                <VerticalStackLayout HorizontalOptions="FillAndExpand">
+                    <Label Text="RSVP Deadline (Date)" TextColor="#D0D0D0" FontSize="12" />
+                    <DatePicker x:Name="RsvpDatePicker" BackgroundColor="#121214" TextColor="White" />
+                </VerticalStackLayout>
+                <VerticalStackLayout WidthRequest="120">
+                    <Label Text="Time" TextColor="#D0D0D0" FontSize="12" />
+                    <TimePicker x:Name="RsvpTimePicker" BackgroundColor="#121214" TextColor="White" />
+                </VerticalStackLayout>
+            </HorizontalStackLayout>
+
+            <HorizontalStackLayout Spacing="12" Padding="0,8,0,0">
+                <Button x:Name="SaveButton" Text="Save" BackgroundColor="#0A3B78" TextColor="White" CornerRadius="8" HorizontalOptions="FillAndExpand" Clicked="OnSaveClicked" HeightRequest="46" />
+                <Button x:Name="CancelButton" Text="Cancel" BackgroundColor="Transparent" BorderColor="#0A3B78" BorderWidth="1" TextColor="White" CornerRadius="8" HorizontalOptions="Fill" Clicked="OnCancelClicked" HeightRequest="46" />
+            </HorizontalStackLayout>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

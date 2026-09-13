@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="RSVPApp.EventsPage"
+             Title="Events"
+             BackgroundColor="#0B0B0D">
+
+    <ScrollView>
+        <VerticalStackLayout
+            Padding="18"
+            Spacing="12">
+
+            <Label
+                Text="Events"
+                FontSize="26"
+                TextColor="White"
+                HorizontalOptions="Start" />
+
+            <!-- Filter controls -->
+            <HorizontalStackLayout
+                Spacing="8"
+                HorizontalOptions="Fill">
+                <Button
+                    x:Name="AllEventsButton"
+                    Text="All Events"
+                    Clicked="OnAllEventsClicked"
+                    BackgroundColor="#0A3B78"
+                    TextColor="White"
+                    CornerRadius="8" />
+
+                <Button
+                    x:Name="AttendingButton"
+                    Text="Attending"
+                    Clicked="OnAttendingClicked"
+                    BackgroundColor="Transparent"
+                    BorderColor="#0A3B78"
+                    TextColor="White"
+                    CornerRadius="8" />
+
+                <Button
+                    x:Name="HostingButton"
+                    Text="Hosting"
+                    Clicked="OnHostingClicked"
+                    BackgroundColor="Transparent"
+                    BorderColor="#0A3B78"
+                    TextColor="White"
+                    CornerRadius="8" />
+            </HorizontalStackLayout>
+
+            <!-- Sample events list -->
+            <VerticalStackLayout Spacing="10">
+
+                <Frame
+                    x:Name="PotluckFrame"
+                    BackgroundColor="#121214"
+                    CornerRadius="8"
+                    HasShadow="False">
+
+                    <VerticalStackLayout Padding="12">
+                    <Label
+                        Text="Community Potluck"
+                        FontAttributes="Bold"
+                        TextColor="White" />
+
+                     <Label
+                        Text="Sat, Oct 2 · 6:00 PM · Community Hall"
+                        FontSize="12"
+                        TextColor="#D0D0D0" />
+
+                     <Label
+                        Text="Bring a dish to share and meet your neighbors."
+                        FontSize="12"
+                        TextColor="#C0C0C0" />
+                    </VerticalStackLayout>
+
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer
+                            Tapped="OnEventTapped"
+                            CommandParameter="Community Potluck" />
+                    </Frame.GestureRecognizers>
+                </Frame>
+
+
+                <Frame
+                    x:Name="CharityFrame"
+                    BackgroundColor="#121214"
+                    CornerRadius="8"
+                    HasShadow="False">
+
+                    <VerticalStackLayout Padding="12">
+                        <Label
+                            Text="Charity Run"
+                            FontAttributes="Bold"
+                            TextColor="White" />
+
+                        <Label
+                            Text="Sun, Oct 10 · 9:00 AM · River Park"
+                            FontSize="12"
+                            TextColor="#D0D0D0" />
+
+                        <Label
+                            Text="5K run to raise funds for local schools."
+                            FontSize="12"
+                            TextColor="#C0C0C0" />
+                    </VerticalStackLayout>
+
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer
+                            Tapped="OnEventTapped"
+                            CommandParameter="Charity Run" />
+                    </Frame.GestureRecognizers>
+                </Frame>
+
+
+                <Frame
+                    x:Name="GameNightFrame"
+                    BackgroundColor="#121214"
+                    CornerRadius="8"
+                    HasShadow="False">
+
+                    <VerticalStackLayout Padding="12">
+                        <Label
+                            Text="Board Game Night"
+                            FontAttributes="Bold"
+                            TextColor="White" />
+
+                        <Label
+                            Text="Fri, Oct 15 · 7:30 PM · Library Room B"
+                            FontSize="12"
+                            TextColor="#D0D0D0" />
+
+                        <Label
+                            Text="Casual evening of board games — all skill levels welcome."
+                            FontSize="12"
+                            TextColor="#C0C0C0" />
+                    </VerticalStackLayout>
+
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer
+                            Tapped="OnEventTapped"
+                            CommandParameter="Board Game Night" />
+                    </Frame.GestureRecognizers>
+                </Frame>
+
+            </VerticalStackLayout>
+
+            <!-- Actions -->
+            <HorizontalStackLayout Spacing="12" Padding="0,8,0,0">
+                <Button x:Name="AddEventButton" Text="Add Event" BackgroundColor="#0A3B78" TextColor="White" CornerRadius="8" HorizontalOptions="Fill" Clicked="OnAddEventClicked" />
+                <Button x:Name="LogoutButton" Text="Log Out" BackgroundColor="Transparent" BorderColor="#0A3B78" TextColor="White" CornerRadius="8" HorizontalOptions="Fill" Clicked="OnLogoutClicked" />
+            </HorizontalStackLayout>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>
