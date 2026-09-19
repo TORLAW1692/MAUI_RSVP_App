@@ -1,8 +1,15 @@
-﻿namespace RSVPApp
+﻿using RSVPApp.DataAccess;
+using RSVPApp.Models;
+
+namespace RSVPApp
 {
     public partial class MainPage : ContentPage
     {
         public static bool IsGuest { get; set; }
+
+        public static User? CurrentUser { get; set; }
+
+        private readonly AppDatabase database = new();
 
         public MainPage()
         {
@@ -15,9 +22,24 @@
             string email = EmailEntry.Text?.Trim() ?? "";
             string password = PasswordEntry.Text ?? "";
 
-            if (email == "tory@example.com" && password == "Password1")
+            if (string.IsNullOrWhiteSpace(email) ||
+                string.IsNullOrWhiteSpace(password))
+            {
+                await DisplayAlertAsync(
+                    "Missing Information",
+                    "Please enter your email and password.",
+                    "OK");
+
+                return;
+            }
+
+            User? user = await database.ValidateUserAsync(email, password);
+
+            if (user is not null)
             {
                 MainPage.IsGuest = false;
+                MainPage.CurrentUser = user;
+
                 await Navigation.PushAsync(new EventsPage());
             }
             else
@@ -33,6 +55,7 @@
         private async void OnGuestLoginClicked(object? sender, EventArgs e)
         {
             MainPage.IsGuest = true;
+            MainPage.CurrentUser = null;
             await Navigation.PushAsync(new EventsPage());
         }
 

@@ -1,7 +1,12 @@
+using RSVPApp.DataAccess;
+using RSVPApp.Models;
+
 namespace RSVPApp;
 
 public partial class AddUserPage : ContentPage
 {
+    private readonly AppDatabase database = new();
+
     public AddUserPage()
     {
         InitializeComponent();
@@ -28,7 +33,35 @@ public partial class AddUserPage : ContentPage
             return;
         }
 
-        await Navigation.PushAsync(new EventsPage());
+        // Prevent duplicate accounts using the same email address.
+        User? existingUser = await database.GetUserByEmailAsync(email);
+
+        if (existingUser is not null)
+        {
+            await DisplayAlertAsync(
+                "Account Exists",
+                "An account with this email address already exists.",
+                "OK");
+
+            return;
+        }
+
+        User newUser = new()
+        {
+            Name = name,
+            EmailAddress = email,
+            Password = password,
+            MobilePhoneNumber = phone
+        };
+
+        await database.AddUserAsync(newUser);
+
+        await DisplayAlertAsync(
+            "Account Created",
+            "Your account was created successfully.",
+            "OK");
+
+        await Navigation.PopAsync();
     }
 
     // Cancels account creation and returns to the login page.

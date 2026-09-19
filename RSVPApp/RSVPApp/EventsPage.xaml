@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="RSVPApp.EventsPage"
-             Title="Events"
-             BackgroundColor="#0B0B0D">
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:models="clr-namespace:RSVPApp.Models"
+    x:Class="RSVPApp.EventsPage"
+    Title="Events"
+    BackgroundColor="#08080D">
 
     <ScrollView>
-        <VerticalStackLayout
-            Padding="18"
-            Spacing="12">
+        <VerticalStackLayout Padding="18" Spacing="12">
 
             <Label
                 Text="Events"
@@ -17,9 +17,7 @@
                 HorizontalOptions="Start" />
 
             <!-- Filter controls -->
-            <HorizontalStackLayout
-                Spacing="8"
-                HorizontalOptions="Fill">
+            <HorizontalStackLayout Spacing="8" HorizontalOptions="Fill">
                 <Button
                     x:Name="AllEventsButton"
                     Text="All Events"
@@ -47,107 +45,70 @@
                     CornerRadius="8" />
             </HorizontalStackLayout>
 
-            <!-- Sample events list -->
-            <VerticalStackLayout Spacing="10">
+            <!-- Events list -->
+            <VerticalStackLayout Spacing="10" BindableLayout.ItemsSource="{Binding DisplayedEvents}">
 
-                <Frame
-                    x:Name="PotluckFrame"
-                    BackgroundColor="#121214"
-                    CornerRadius="8"
-                    HasShadow="False">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate x:DataType="models:Event">
+                        <Border
+                            BackgroundColor="#121214"
+                            Stroke="#2A2A2E"
+                            StrokeThickness="1"
+                            Padding="12">
 
-                    <VerticalStackLayout Padding="12">
-                    <Label
-                        Text="Community Potluck"
-                        FontAttributes="Bold"
-                        TextColor="White" />
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer
+                                    Tapped="OnEventTapped"
+                                    CommandParameter="{Binding .}" />
+                            </Border.GestureRecognizers>
 
-                     <Label
-                        Text="Sat, Oct 2 · 6:00 PM · Community Hall"
-                        FontSize="12"
-                        TextColor="#D0D0D0" />
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="12" />
+                            </Border.StrokeShape>
 
-                     <Label
-                        Text="Bring a dish to share and meet your neighbors."
-                        FontSize="12"
-                        TextColor="#C0C0C0" />
-                    </VerticalStackLayout>
+                            <VerticalStackLayout Spacing="4">
+                                <Label
+                                    Text="{Binding EventName}"
+                                    FontAttributes="Bold"
+                                    FontSize="16"
+                                    TextColor="White" />
 
-                    <Frame.GestureRecognizers>
-                        <TapGestureRecognizer
-                            Tapped="OnEventTapped"
-                            CommandParameter="Community Potluck" />
-                    </Frame.GestureRecognizers>
-                </Frame>
+                                <Label
+                                    Text="{Binding EventDateTime, StringFormat='{0:ddd, MMM d - h:mm tt}'}"
+                                    FontSize="12"
+                                    TextColor="#D0D0D0" />
 
-
-                <Frame
-                    x:Name="CharityFrame"
-                    BackgroundColor="#121214"
-                    CornerRadius="8"
-                    HasShadow="False">
-
-                    <VerticalStackLayout Padding="12">
-                        <Label
-                            Text="Charity Run"
-                            FontAttributes="Bold"
-                            TextColor="White" />
-
-                        <Label
-                            Text="Sun, Oct 10 · 9:00 AM · River Park"
-                            FontSize="12"
-                            TextColor="#D0D0D0" />
-
-                        <Label
-                            Text="5K run to raise funds for local schools."
-                            FontSize="12"
-                            TextColor="#C0C0C0" />
-                    </VerticalStackLayout>
-
-                    <Frame.GestureRecognizers>
-                        <TapGestureRecognizer
-                            Tapped="OnEventTapped"
-                            CommandParameter="Charity Run" />
-                    </Frame.GestureRecognizers>
-                </Frame>
-
-
-                <Frame
-                    x:Name="GameNightFrame"
-                    BackgroundColor="#121214"
-                    CornerRadius="8"
-                    HasShadow="False">
-
-                    <VerticalStackLayout Padding="12">
-                        <Label
-                            Text="Board Game Night"
-                            FontAttributes="Bold"
-                            TextColor="White" />
-
-                        <Label
-                            Text="Fri, Oct 15 · 7:30 PM · Library Room B"
-                            FontSize="12"
-                            TextColor="#D0D0D0" />
-
-                        <Label
-                            Text="Casual evening of board games — all skill levels welcome."
-                            FontSize="12"
-                            TextColor="#C0C0C0" />
-                    </VerticalStackLayout>
-
-                    <Frame.GestureRecognizers>
-                        <TapGestureRecognizer
-                            Tapped="OnEventTapped"
-                            CommandParameter="Board Game Night" />
-                    </Frame.GestureRecognizers>
-                </Frame>
+                                <Label
+                                    Text="{Binding EventAddress}"
+                                    FontSize="12"
+                                    TextColor="#ACBCC0" />
+                            </VerticalStackLayout>
+                        </Border>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
 
             </VerticalStackLayout>
 
             <!-- Actions -->
             <HorizontalStackLayout Spacing="12" Padding="0,8,0,0">
-                <Button x:Name="AddEventButton" Text="Add Event" BackgroundColor="#0A3B78" TextColor="White" CornerRadius="8" HorizontalOptions="Fill" Clicked="OnAddEventClicked" />
-                <Button x:Name="LogoutButton" Text="Log Out" BackgroundColor="Transparent" BorderColor="#0A3B78" TextColor="White" CornerRadius="8" HorizontalOptions="Fill" Clicked="OnLogoutClicked" />
+                <Button
+                    x:Name="AddEventButton"
+                    Text="Add Event"
+                    BackgroundColor="#0A3B78"
+                    TextColor="White"
+                    CornerRadius="8"
+                    HorizontalOptions="Fill"
+                    Clicked="OnAddEventClicked" />
+
+                <Button
+                    x:Name="LogoutButton"
+                    Text="Log Out"
+                    BackgroundColor="Transparent"
+                    BorderColor="#0A3B78"
+                    TextColor="White"
+                    CornerRadius="8"
+                    HorizontalOptions="Fill"
+                    Clicked="OnLogoutClicked" />
             </HorizontalStackLayout>
 
         </VerticalStackLayout>
