@@ -40,6 +40,24 @@ public partial class EventDetailsPage : ContentPage
         AttendeeCountLabel.Text =
             $"Current Attendees: {rsvps.Count}";
 
+        List<string> attendeeNames = new();
+
+        foreach (RSVP rsvp in rsvps)
+        {
+            User? attendee =
+                await database.GetUserByIdAsync(rsvp.UserID);
+
+            if (attendee is not null)
+            {
+                attendeeNames.Add(attendee.Name);
+            }
+        }
+
+        AttendeeNamesLabel.Text =
+            attendeeNames.Count > 0
+                ? $"Attending: {string.Join(", ", attendeeNames)}"
+                : "Attending: No attendees yet";
+
         // Prepopulate RSVP information from the logged-in account.
         if (MainPage.CurrentUser is not null)
         {

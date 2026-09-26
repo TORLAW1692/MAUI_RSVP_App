@@ -46,6 +46,10 @@
                         TextColor="#D0D0D0" />
 
                     <Label
+                        x:Name="AttendeeNamesLabel"
+                        TextColor="#D0D0D0" />
+
+                    <Label
                         Text="{Binding EventDateTime, StringFormat='Event: {0:ddd, MMM d - h:mm tt}'}"
                         TextColor="#D0D0D0" />
 

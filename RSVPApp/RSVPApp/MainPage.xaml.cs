@@ -5,6 +5,7 @@ namespace RSVPApp
 {
     public partial class MainPage : ContentPage
     {
+        private readonly AuthenticationService authenticationService = new();
         public static bool IsGuest { get; set; }
 
         public static User? CurrentUser { get; set; }
@@ -33,9 +34,19 @@ namespace RSVPApp
                 return;
             }
 
-            User? user = await database.ValidateUserAsync(email, password);
+            bool authenticated =
+                await authenticationService.AuthenticateUserAsync(
+                    email,
+                    password);
 
-            if (user is not null)
+            User? user = null;
+
+            if (authenticated)
+            {
+                user = await database.GetUserByEmailAsync(email);
+            }
+
+            if (authenticated && user is not null)
             {
                 MainPage.IsGuest = false;
                 MainPage.CurrentUser = user;

@@ -1,3 +1,4 @@
+using System.Net.Mail;
 using RSVPApp.DataAccess;
 using RSVPApp.Models;
 
@@ -6,13 +7,15 @@ namespace RSVPApp;
 public partial class AddUserPage : ContentPage
 {
     private readonly AppDatabase database = new();
+    private readonly AuthenticationService authenticationService = new();
 
     public AddUserPage()
     {
         InitializeComponent();
     }
 
-    // Validates that all account fields contain data.
+    // Validates account information, saves the user locally,
+    // and registers the user with the authentication web service.
     private async void OnOkClicked(object? sender, EventArgs e)
     {
         string name = NameEntry.Text?.Trim() ?? "";
@@ -20,6 +23,7 @@ public partial class AddUserPage : ContentPage
         string password = PasswordEntry.Text ?? "";
         string phone = PhoneEntry.Text?.Trim() ?? "";
 
+        // Make sure all required fields contain data.
         if (string.IsNullOrWhiteSpace(name) ||
             string.IsNullOrWhiteSpace(email) ||
             string.IsNullOrWhiteSpace(password) ||
@@ -28,6 +32,31 @@ public partial class AddUserPage : ContentPage
             await DisplayAlertAsync(
                 "Missing Information",
                 "Please fill in all fields.",
+                "OK");
+
+            return;
+        }
+
+        // Validate the email address format.
+        try
+        {
+            MailAddress emailAddress = new(email);
+
+            if (emailAddress.Address != email)
+            {
+                await DisplayAlertAsync(
+                    "Invalid Email",
+                    "Please enter a valid email address.",
+                    "OK");
+
+                return;
+            }
+        }
+        catch
+        {
+            await DisplayAlertAsync(
+                "Invalid Email",
+                "Please enter a valid email address.",
                 "OK");
 
             return;
@@ -54,7 +83,22 @@ public partial class AddUserPage : ContentPage
             MobilePhoneNumber = phone
         };
 
+        // Save the account to the local SQLite database.
         await database.AddUserAsync(newUser);
+
+        // Register the same credentials with the authentication web service.
+        bool registered =
+            await authenticationService.RegisterUserAsync(newUser);
+
+        if (!registered)
+        {
+            await DisplayAlertAsync(
+                "Web Service Error",
+                "The account was saved locally, but could not be registered with the authentication service.",
+                "OK");
+
+            return;
+        }
 
         await DisplayAlertAsync(
             "Account Created",
