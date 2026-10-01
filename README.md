@@ -57,12 +57,12 @@ The application has been developed incrementally across course milestones. Recen
 - RSVP deadline and attendee-capacity rules
 - Expanded event-management workflows
 
-## Screenshots
+## Application Screenshots
 
-<img width="712" height="593" alt="RSVP_Login_Page" src="https://github.com/user-attachments/assets/eabbdcb2-cf64-423f-8f01-556e88cbf7a4" /><img width="712" height="631" alt="RSVP_Event_Details" src="https://github.com/user-attachments/assets/6472932e-b721-46d2-9169-be535f15de25" />
-<img width="712" height="631" alt="RSVP_Event_List" src="https://github.com/user-attachments/assets/036d3930-bbd6-45a4-a7b2-1602220f372b" />
-
-
+| Login | Event List | Event Details & RSVP |
+|---|---|---|
+| User entry point for the application. | Browse available events and open event details. | Review event information, attendee status, RSVP deadline, and submit a response. |
+| <img src="https://github.com/user-attachments/assets/eabbdcb2-cf64-423f-8f01-556e88cbf7a4" alt="RSVP App Login Page" width="260"> | <img src="https://github.com/user-attachments/assets/036d3930-bbd6-45a4-a7b2-1602220f372b" alt="RSVP Event List" width="260"> | <img src="https://github.com/user-attachments/assets/6472932e-b721-46d2-9169-be535f15de25" alt="RSVP Event Details and RSVP Form" width="260"> |
 
 ## Current Status
 
